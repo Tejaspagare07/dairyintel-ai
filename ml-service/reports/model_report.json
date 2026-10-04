@@ -1,0 +1,844 @@
+{
+  "generated_at": "2026-09-20T16:21:41+00:00",
+  "dataset": {
+    "rows": 1000,
+    "columns_in_file": [
+      "Test_No",
+      "Date",
+      "Shift",
+      "Fat_%",
+      "SNF_%",
+      "CLR_Density",
+      "Protein_%",
+      "Lactose_%",
+      "Added_Water_%",
+      "Milk_Temp_C",
+      "EC_mS_cm",
+      "SCC_cells_ml",
+      "Analyzer_Model",
+      "Data_Source",
+      "Original_Test_Date",
+      "Health_Quality_Alert"
+    ],
+    "dropped_columns": [
+      "Analyzer_Model",
+      "Data_Source",
+      "Original_Test_Date",
+      "Health_Quality_Alert",
+      "Test_No",
+      "Date"
+    ],
+    "source_breakdown": {
+      "calibrated_synthetic": 1000
+    },
+    "features": [
+      "fat",
+      "snf",
+      "clr",
+      "protein",
+      "lactose",
+      "added_water",
+      "temp",
+      "fat_protein_ratio",
+      "lactose_snf_ratio",
+      "protein_snf_ratio",
+      "shift_morning",
+      "temp_missing",
+      "ec",
+      "scc"
+    ],
+    "ec_scc_in_training_data": true,
+    "missing_values": {},
+    "label_counts": {
+      "Healthy": 560,
+      "Mastitis": 280,
+      "Ketosis": 160
+    },
+    "file": "dairyintel_disease_calibrated.csv"
+  },
+  "method": {
+    "paper": "Hyde et al., 'Automated prediction of mastitis infection patterns in dairy herds using machine learning', Scientific Reports 10:4289 (2020)",
+    "what_we_took_from_it": [
+      "Random Forest classifier",
+      "Engineered ratio features on top of raw readings",
+      "Imputation of missing values rather than dropping the sample",
+      "Cross-validation plus a held-out validation set; threshold studied on CV",
+      "Reporting precision (PPV) and NPV, not just accuracy, because the data is imbalanced",
+      "Class weighting to handle imbalance (the paper recommends sub-sampling methods)"
+    ],
+    "model": "RandomForestClassifier(n_estimators=500, class_weight='balanced', max_features='sqrt') after median imputation",
+    "threshold": 0.6,
+    "threshold_rule": "chosen on cross-validation to maximise balanced accuracy (paper: threshold picked on CV)",
+    "label_rule": "High Risk = alert text mentions mastitis or ketosis; the alert column is then dropped"
+  },
+  "disease": {
+    "loocv": {
+      "accuracy": 0.884,
+      "balanced_accuracy": 0.8772,
+      "precision": 0.907,
+      "recall": 0.8205,
+      "f1": 0.8616,
+      "npv": 0.8688,
+      "confusion_matrix": {
+        "labels": [
+          "High Risk",
+          "Healthy"
+        ],
+        "matrix": [
+          [
+            361,
+            79
+          ],
+          [
+            37,
+            523
+          ]
+        ],
+        "tp": 361,
+        "fn": 79,
+        "fp": 37,
+        "tn": 523
+      },
+      "scheme": "10-fold cross-validation",
+      "thresholds_used": {
+        "min": 0.55,
+        "max": 0.65,
+        "median": 0.65
+      }
+    },
+    "loocv_note": "10-fold cross-validation: each row is predicted by a model trained on the other folds, with the decision threshold also tuned only on those training folds (nested, no leakage).",
+    "loocv_default_threshold_0_5": {
+      "accuracy": 0.863,
+      "balanced_accuracy": 0.8636,
+      "precision": 0.8286,
+      "recall": 0.8682,
+      "f1": 0.8479,
+      "npv": 0.8924,
+      "confusion_matrix": {
+        "labels": [
+          "High Risk",
+          "Healthy"
+        ],
+        "matrix": [
+          [
+            382,
+            58
+          ],
+          [
+            79,
+            481
+          ]
+        ],
+        "tp": 382,
+        "fn": 58,
+        "fp": 79,
+        "tn": 481
+      }
+    },
+    "loocv_condition": {
+      "labels": [
+        "Healthy",
+        "Ketosis",
+        "Mastitis"
+      ],
+      "matrix": [
+        [
+          523,
+          32,
+          5
+        ],
+        [
+          60,
+          96,
+          4
+        ],
+        [
+          19,
+          3,
+          258
+        ]
+      ],
+      "per_class": {
+        "Healthy": {
+          "precision": 0.8688,
+          "recall": 0.9339,
+          "support": 560
+        },
+        "Ketosis": {
+          "precision": 0.7328,
+          "recall": 0.6,
+          "support": 160
+        },
+        "Mastitis": {
+          "precision": 0.9663,
+          "recall": 0.9214,
+          "support": 280
+        }
+      },
+      "accuracy": 0.877
+    },
+    "no_lab_scenario": {
+      "accuracy": 0.802,
+      "balanced_accuracy": 0.7857,
+      "precision": 0.8667,
+      "recall": 0.65,
+      "f1": 0.7429,
+      "npv": 0.7701,
+      "confusion_matrix": {
+        "labels": [
+          "High Risk",
+          "Healthy"
+        ],
+        "matrix": [
+          [
+            286,
+            154
+          ],
+          [
+            44,
+            516
+          ]
+        ],
+        "tp": 286,
+        "fn": 154,
+        "fp": 44,
+        "tn": 516
+      },
+      "note": "EC and SCC were available during training but left blank at prediction time - the accuracy to expect when only analyzer composition readings are entered."
+    },
+    "repeated_cv": {
+      "scheme": "5-fold x 5 repeats, stratified, threshold tuned on training folds",
+      "accuracy": {
+        "mean": 0.8784,
+        "std": 0.0187
+      },
+      "precision": {
+        "mean": 0.8976,
+        "std": 0.0408
+      },
+      "recall": {
+        "mean": 0.8205,
+        "std": 0.0502
+      },
+      "balanced_accuracy": {
+        "mean": 0.8722,
+        "std": 0.0203
+      }
+    },
+    "holdout": {
+      "accuracy": 0.85,
+      "balanced_accuracy": 0.849,
+      "precision": 0.8222,
+      "recall": 0.8409,
+      "f1": 0.8315,
+      "npv": 0.8727,
+      "confusion_matrix": {
+        "labels": [
+          "High Risk",
+          "Healthy"
+        ],
+        "matrix": [
+          [
+            111,
+            21
+          ],
+          [
+            24,
+            144
+          ]
+        ],
+        "tp": 111,
+        "fn": 21,
+        "fp": 24,
+        "tn": 144
+      },
+      "threshold_tuned_on_train": 0.55,
+      "train_rows": 700,
+      "validation_rows": 300
+    },
+    "baselines": {
+      "always_healthy": {
+        "accuracy": 0.56,
+        "balanced_accuracy": 0.5,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "npv": 0.56,
+        "confusion_matrix": {
+          "labels": [
+            "High Risk",
+            "Healthy"
+          ],
+          "matrix": [
+            [
+              0,
+              440
+            ],
+            [
+              0,
+              560
+            ]
+          ],
+          "tp": 0,
+          "fn": 440,
+          "fp": 0,
+          "tn": 560
+        }
+      },
+      "raw_features_only_rf": {
+        "accuracy": 0.811,
+        "balanced_accuracy": 0.803,
+        "precision": 0.8161,
+        "recall": 0.7364,
+        "f1": 0.7742,
+        "npv": 0.8076,
+        "confusion_matrix": {
+          "labels": [
+            "High Risk",
+            "Healthy"
+          ],
+          "matrix": [
+            [
+              324,
+              116
+            ],
+            [
+              73,
+              487
+            ]
+          ],
+          "tp": 324,
+          "fn": 116,
+          "fp": 73,
+          "tn": 487
+        }
+      }
+    },
+    "threshold_sweep": [
+      {
+        "threshold": 0.2,
+        "precision": 0.6104,
+        "recall": 0.9614,
+        "accuracy": 0.713,
+        "balanced_accuracy": 0.7396
+      },
+      {
+        "threshold": 0.25,
+        "precision": 0.6446,
+        "recall": 0.9523,
+        "accuracy": 0.748,
+        "balanced_accuracy": 0.7699
+      },
+      {
+        "threshold": 0.3,
+        "precision": 0.6809,
+        "recall": 0.9409,
+        "accuracy": 0.78,
+        "balanced_accuracy": 0.7972
+      },
+      {
+        "threshold": 0.35,
+        "precision": 0.7153,
+        "recall": 0.925,
+        "accuracy": 0.805,
+        "balanced_accuracy": 0.8179
+      },
+      {
+        "threshold": 0.4,
+        "precision": 0.7552,
+        "recall": 0.9045,
+        "accuracy": 0.829,
+        "balanced_accuracy": 0.8371
+      },
+      {
+        "threshold": 0.45,
+        "precision": 0.7883,
+        "recall": 0.8886,
+        "accuracy": 0.846,
+        "balanced_accuracy": 0.8506
+      },
+      {
+        "threshold": 0.5,
+        "precision": 0.8286,
+        "recall": 0.8682,
+        "accuracy": 0.863,
+        "balanced_accuracy": 0.8636
+      },
+      {
+        "threshold": 0.55,
+        "precision": 0.8526,
+        "recall": 0.8545,
+        "accuracy": 0.871,
+        "balanced_accuracy": 0.8692
+      },
+      {
+        "threshold": 0.6,
+        "precision": 0.8971,
+        "recall": 0.8318,
+        "accuracy": 0.884,
+        "balanced_accuracy": 0.8784
+      },
+      {
+        "threshold": 0.65,
+        "precision": 0.9154,
+        "recall": 0.8114,
+        "accuracy": 0.884,
+        "balanced_accuracy": 0.8762
+      },
+      {
+        "threshold": 0.7,
+        "precision": 0.9431,
+        "recall": 0.7909,
+        "accuracy": 0.887,
+        "balanced_accuracy": 0.8767
+      }
+    ],
+    "feature_importance": [
+      {
+        "feature": "ec",
+        "importance": 0.1714
+      },
+      {
+        "feature": "scc",
+        "importance": 0.1612
+      },
+      {
+        "feature": "fat_protein_ratio",
+        "importance": 0.1305
+      },
+      {
+        "feature": "fat",
+        "importance": 0.0951
+      },
+      {
+        "feature": "lactose",
+        "importance": 0.0878
+      },
+      {
+        "feature": "lactose_snf_ratio",
+        "importance": 0.0857
+      },
+      {
+        "feature": "protein_snf_ratio",
+        "importance": 0.0669
+      },
+      {
+        "feature": "clr",
+        "importance": 0.0564
+      },
+      {
+        "feature": "snf",
+        "importance": 0.0543
+      },
+      {
+        "feature": "protein",
+        "importance": 0.0522
+      },
+      {
+        "feature": "temp",
+        "importance": 0.0321
+      },
+      {
+        "feature": "shift_morning",
+        "importance": 0.0066
+      },
+      {
+        "feature": "added_water",
+        "importance": 0.0
+      },
+      {
+        "feature": "temp_missing",
+        "importance": 0.0
+      }
+    ],
+    "per_row_note": "Sample of 60 of 1000 rows (out-of-fold predictions).",
+    "per_row": [
+      {
+        "test": "C0001",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.28
+      },
+      {
+        "test": "C0002",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.998
+      },
+      {
+        "test": "C0003",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.872
+      },
+      {
+        "test": "C0004",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.93
+      },
+      {
+        "test": "C0005",
+        "actual": "Healthy",
+        "predicted": "Ketosis",
+        "p_risk_loocv": 0.726
+      },
+      {
+        "test": "C0006",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.982
+      },
+      {
+        "test": "C0007",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.936
+      },
+      {
+        "test": "C0008",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.39
+      },
+      {
+        "test": "C0009",
+        "actual": "Ketosis",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.438
+      },
+      {
+        "test": "C0010",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.53
+      },
+      {
+        "test": "C0011",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.988
+      },
+      {
+        "test": "C0012",
+        "actual": "Healthy",
+        "predicted": "Ketosis",
+        "p_risk_loocv": 0.866
+      },
+      {
+        "test": "C0013",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.984
+      },
+      {
+        "test": "C0014",
+        "actual": "Ketosis",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.524
+      },
+      {
+        "test": "C0015",
+        "actual": "Ketosis",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.3
+      },
+      {
+        "test": "C0016",
+        "actual": "Ketosis",
+        "predicted": "Ketosis",
+        "p_risk_loocv": 0.798
+      },
+      {
+        "test": "C0017",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.122
+      },
+      {
+        "test": "C0018",
+        "actual": "Ketosis",
+        "predicted": "Ketosis",
+        "p_risk_loocv": 0.73
+      },
+      {
+        "test": "C0019",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.986
+      },
+      {
+        "test": "C0020",
+        "actual": "Healthy",
+        "predicted": "Ketosis",
+        "p_risk_loocv": 0.82
+      },
+      {
+        "test": "C0021",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.038
+      },
+      {
+        "test": "C0022",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.278
+      },
+      {
+        "test": "C0023",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.11
+      },
+      {
+        "test": "C0024",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.408
+      },
+      {
+        "test": "C0025",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.392
+      },
+      {
+        "test": "C0026",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.134
+      },
+      {
+        "test": "C0027",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.246
+      },
+      {
+        "test": "C0028",
+        "actual": "Ketosis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.694
+      },
+      {
+        "test": "C0029",
+        "actual": "Ketosis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.742
+      },
+      {
+        "test": "C0030",
+        "actual": "Ketosis",
+        "predicted": "Ketosis",
+        "p_risk_loocv": 0.744
+      },
+      {
+        "test": "C0031",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.444
+      },
+      {
+        "test": "C0032",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.214
+      },
+      {
+        "test": "C0033",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.894
+      },
+      {
+        "test": "C0034",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.42
+      },
+      {
+        "test": "C0035",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.228
+      },
+      {
+        "test": "C0036",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.352
+      },
+      {
+        "test": "C0037",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.924
+      },
+      {
+        "test": "C0038",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.852
+      },
+      {
+        "test": "C0039",
+        "actual": "Ketosis",
+        "predicted": "Ketosis",
+        "p_risk_loocv": 0.858
+      },
+      {
+        "test": "C0040",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.11
+      },
+      {
+        "test": "C0041",
+        "actual": "Healthy",
+        "predicted": "Ketosis",
+        "p_risk_loocv": 0.746
+      },
+      {
+        "test": "C0042",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.32
+      },
+      {
+        "test": "C0043",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.32
+      },
+      {
+        "test": "C0044",
+        "actual": "Ketosis",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.346
+      },
+      {
+        "test": "C0045",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.086
+      },
+      {
+        "test": "C0046",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.106
+      },
+      {
+        "test": "C0047",
+        "actual": "Ketosis",
+        "predicted": "Ketosis",
+        "p_risk_loocv": 0.806
+      },
+      {
+        "test": "C0048",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.902
+      },
+      {
+        "test": "C0049",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.22
+      },
+      {
+        "test": "C0050",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.996
+      },
+      {
+        "test": "C0051",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.876
+      },
+      {
+        "test": "C0052",
+        "actual": "Ketosis",
+        "predicted": "Ketosis",
+        "p_risk_loocv": 0.786
+      },
+      {
+        "test": "C0053",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.08
+      },
+      {
+        "test": "C0054",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.998
+      },
+      {
+        "test": "C0055",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.072
+      },
+      {
+        "test": "C0056",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.066
+      },
+      {
+        "test": "C0057",
+        "actual": "Mastitis",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.366
+      },
+      {
+        "test": "C0058",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.05
+      },
+      {
+        "test": "C0059",
+        "actual": "Healthy",
+        "predicted": "Healthy",
+        "p_risk_loocv": 0.414
+      },
+      {
+        "test": "C0060",
+        "actual": "Mastitis",
+        "predicted": "Mastitis",
+        "p_risk_loocv": 0.672
+      }
+    ]
+  },
+  "quality": {
+    "approach": "Standards-based grading (FSSAI fat/SNF minimums, added water, CLR, protein)",
+    "why": "The CSV has no independent quality label (no lab or buyer grade), so a model trained on it would only re-learn whatever rule we used to create the labels. The grade is therefore computed directly from published standards and every reason is shown to the user. Add a 'Quality_Grade' column (Good/Average/Poor) from your collection centre and re-run train.py to train a quality model on real grades.",
+    "grade_counts_on_dataset": {
+      "Good": 875,
+      "Average": 117,
+      "Poor": 8
+    }
+  },
+  "verdict": {
+    "reliable_for_production": true,
+    "headline": "Strong and stable on this calibrated dataset - but it must still be validated on real, vet/lab-labelled samples before field use.",
+    "why": [
+      "1000 samples (Healthy 560, Mastitis 280, Ketosis 160). That is a usable size, and every number above is cross-validated - each row is scored by a model that never saw it - so the scores are not inflated by the model memorising the data.",
+      "IMPORTANT: the data is calibrated-synthetic, not real cows. All 1000 rows were generated from published distributions (in mastitis lactose falls while EC, SCC and minerals rise; in ketosis fat rises and protein falls so the fat:protein ratio climbs), with realistic class overlap and analyzer measurement noise added. This proves the pipeline is correct and honestly evaluated; it does NOT prove the model works on your herd.",
+      "The classes deliberately overlap - mild subclinical mastitis that looks almost healthy, borderline-healthy cows with a raised cell count, mild ketosis. That is why the accuracy sits in a believable range instead of a suspicious ~99%.",
+      "With EC and SCC left blank, recall falls to 65.0% and accuracy to 80.2% (see the 'no-lab' row). EC and SCC are the strongest mastitis signals, so entering them when available makes the screen clearly stronger."
+    ],
+    "to_improve": [
+      "Replace the synthetic rows with 300+ real measured samples as you collect them.",
+      "Label them from a vet or a test (CMT / SCC for mastitis, BHB strip for ketosis), not from rules.",
+      "Record EC and SCC on as many samples as possible so the model leans on measured signals.",
+      "Keep animal ID and date so repeat samples of the same cow give trend features (as in the paper).",
+      "Validate on a separate farm or month (external validation), as Hyde et al. did."
+    ]
+  }
+}

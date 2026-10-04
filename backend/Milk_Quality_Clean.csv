@@ -1,0 +1,29 @@
+Test_ID,Test_Date,Shift,Fat_Percent,SNF_Percent,Protein_Percent,Lactose_Percent,Milk_Temperature_C,CLR_Density,Health_Quality_Alert
+T001,2026-09-04,Morning,4.3,7.7,2.97,4.33,33.9,26.2,High added water (8.0%) - quality/adulteration concern (not an animal-health issue)
+T002,2026-09-04,Evening,4.8,8.2,3.15,4.59,29.9,28.1,Normal - within expected range
+T003,2026-09-05,Morning,4.1,9.0,3.46,5.04,28.4,31.3,Normal - within expected range
+T004,2026-09-05,Evening,5.0,7.9,3.03,4.41,32.5,26.3,Normal - within expected range
+T005,2026-09-06,Morning,3.3,7.9,3.04,4.42,,27.0,Normal - within expected range
+T006,2026-09-06,Evening,5.1,8.1,3.1,4.51,29.8,27.6,Normal - within expected range
+T007,2026-09-07,Morning,3.6,7.6,3.15,3.6,39.4,26.3,Low lactose (ratio 0.47) + elevated milk temp (39.4C) - possible mastitis; recommend udder/vet check
+T008,2026-09-07,Evening,4.0,7.5,2.89,4.2,,25.5,High added water (10.0%) - quality/adulteration concern (not an animal-health issue)
+T009,2026-09-08,Morning,3.3,8.1,3.12,4.54,,28.2,Normal - within expected range
+T010,2026-09-08,Evening,6.6,7.9,2.7,4.35,29.8,25.1,Elevated fat:protein ratio (2.44) - possible subclinical ketosis/negative energy balance (best-validated in cattle; interpret cautiously for buffalo); vet review advised
+T011,2026-09-09,Morning,4.3,7.9,3.04,4.42,31.8,26.8,Normal - within expected range
+T012,2026-09-09,Evening,4.8,8.6,3.3,4.81,30.8,29.4,Normal - within expected range
+T013,2026-09-10,Morning,3.1,7.0,2.7,3.92,30.0,24.3,High added water (16.7%) - quality/adulteration concern (not an animal-health issue)
+T014,2026-09-10,Evening,3.0,7.7,2.96,4.31,31.6,27.5,High added water (8.3%) - quality/adulteration concern (not an animal-health issue)
+T015,2026-09-11,Morning,6.1,8.4,3.2,4.7,33.2,28.0,Normal - within expected range
+T016,2026-09-11,Evening,6.4,8.0,3.06,4.46,31.3,25.3,Normal - within expected range
+T017,2026-09-12,Morning,4.8,8.6,3.31,4.82,29.5,29.0,Normal - within expected range
+T018,2026-09-12,Evening,3.3,7.6,2.94,4.27,28.2,27.1,High added water (9.2%) - quality/adulteration concern (not an animal-health issue)
+T019,2026-09-13,Morning,7.2,8.1,2.75,4.54,30.5,25.4,Elevated fat:protein ratio (2.62) - possible subclinical ketosis/negative energy balance (best-validated in cattle; interpret cautiously for buffalo); vet review advised
+T020,2026-09-13,Evening,4.7,8.9,3.4,5.0,,31.3,Normal - within expected range
+T021,2026-09-14,Morning,5.0,8.2,3.17,4.61,31.2,28.0,Normal - within expected range
+T022,2026-09-14,Evening,5.0,8.5,3.27,4.76,32.5,28.9,Normal - within expected range
+T023,2026-09-15,Morning,4.9,8.4,3.22,4.68,29.0,28.4,Normal - within expected range
+T024,2026-09-15,Evening,4.9,8.0,3.35,3.9,39.8,26.9,Low lactose (ratio 0.49) + elevated milk temp (39.8C) - possible mastitis; recommend udder/vet check
+T025,2026-09-16,Morning,5.9,9.1,3.5,5.1,,30.0,Normal - within expected range
+T026,2026-09-16,Evening,5.5,8.3,3.35,4.1,32.1,27.6,Lactose lower than expected for this SNF (ratio 0.49) - possible subclinical mastitis; monitor animal
+T027,2026-09-17,Morning,3.7,7.7,2.98,4.34,29.2,26.5,Normal - within expected range
+T028,2026-09-17,Evening,6.8,7.9,3.1,4.4,,25.6,Normal - within expected range

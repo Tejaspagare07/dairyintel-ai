@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /milk-check
+Disallow: /checks
+Sitemap: https://YOUR-DOMAIN/sitemap.xml

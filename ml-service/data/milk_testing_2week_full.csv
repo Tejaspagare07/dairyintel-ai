@@ -1,0 +1,29 @@
+Test_No,Date,Shift,Analyzer_Model,Fat_%,SNF_%,CLR_Density,Protein_%,Lactose_%,Added_Water_%,Milk_Temp_C,Data_Source,Original_Test_Date,Health_Quality_Alert
+T001,2026-09-04,Morning,Lactoscan Milk Analyzer,4.3,7.7,26.2,2.97,4.33,8.0,33.9,Simulated,,High added water (8.0%) - quality/adulteration concern (not an animal-health issue)
+T002,2026-09-04,Evening,Lactoscan Milk Analyzer,4.8,8.2,28.1,3.15,4.59,2.5,29.9,Simulated,,Normal - within expected range
+T003,2026-09-05,Morning,Lactoscan Milk Analyzer,4.1,9.0,31.3,3.46,5.04,0.0,28.4,Simulated,,Normal - within expected range
+T004,2026-09-05,Evening,Lactoscan Milk Analyzer,5.0,7.9,26.3,3.03,4.41,6.2,32.5,Simulated,,Normal - within expected range
+T005,2026-09-06,Morning,Prompt MilkoLite Combo,3.3,7.9,27.0,3.04,4.42,6.0,NA,Measured (Protein/Lactose estimated - device does not report them),2026-09-17 07:20 (Morning),Normal - within expected range
+T006,2026-09-06,Evening,Lactoscan Milk Analyzer,5.1,8.1,27.6,3.1,4.51,4.1,29.8,Simulated,,Normal - within expected range
+T007,2026-09-07,Morning,Lactoscan Milk Analyzer,3.6,7.6,26.3,3.15,3.6,0.0,39.4,Simulated - flagged,,Low lactose (ratio 0.47) + elevated milk temp (39.4C) - possible mastitis; recommend udder/vet check
+T008,2026-09-07,Evening,Indiz Smart Analyzer,4.0,7.5,25.5,2.89,4.2,10.0,NA,Measured (Protein/Lactose estimated - device does not report them),2026-09-17 07:20 (Morning),High added water (10.0%) - quality/adulteration concern (not an animal-health issue)
+T009,2026-09-08,Morning,Indiz Smart Analyzer,3.3,8.1,28.2,3.12,4.54,4.0,NA,Measured (Protein/Lactose estimated - device does not report them),2026-09-17 07:20 (Morning),Normal - within expected range
+T010,2026-09-08,Evening,Lactoscan Milk Analyzer,6.6,7.9,25.1,2.7,4.35,0.0,29.8,Simulated - flagged,,Elevated fat:protein ratio (2.44) - possible subclinical ketosis/negative energy balance (best-validated in cattle; interpret cautiously for buffalo); vet review advised
+T011,2026-09-09,Morning,Lactoscan Milk Analyzer,4.3,7.9,26.8,3.04,4.42,5.9,31.8,Simulated,,Normal - within expected range
+T012,2026-09-09,Evening,Lactoscan Milk Analyzer,4.8,8.6,29.4,3.3,4.81,0.0,30.8,Simulated,,Normal - within expected range
+T013,2026-09-10,Morning,Lactoscan Milk Analyzer,3.1,7.0,24.3,2.7,3.92,16.7,30.0,Simulated - flagged,,High added water (16.7%) - quality/adulteration concern (not an animal-health issue)
+T014,2026-09-10,Evening,Lactoscan Milk Analyzer,3.0,7.7,27.5,2.96,4.31,8.3,31.6,Simulated,,High added water (8.3%) - quality/adulteration concern (not an animal-health issue)
+T015,2026-09-11,Morning,Lactoscan (Ultrasonic),6.1,8.4,28.0,3.2,4.7,0.0,33.2,Measured (video-confirmed),2026-08-06 10:48 (Morning),Normal - within expected range
+T016,2026-09-11,Evening,Lactoscan Milk Analyzer,6.4,8.0,25.3,3.06,4.46,5.3,31.3,Simulated,,Normal - within expected range
+T017,2026-09-12,Morning,Lactoscan Milk Analyzer,4.8,8.6,29.0,3.31,4.82,0.0,29.5,Simulated,,Normal - within expected range
+T018,2026-09-12,Evening,Lactoscan Milk Analyzer,3.3,7.6,27.1,2.94,4.27,9.2,28.2,Simulated,,High added water (9.2%) - quality/adulteration concern (not an animal-health issue)
+T019,2026-09-13,Morning,Lactoscan Milk Analyzer,7.2,8.1,25.4,2.75,4.54,0.0,30.5,Simulated - flagged,,Elevated fat:protein ratio (2.62) - possible subclinical ketosis/negative energy balance (best-validated in cattle; interpret cautiously for buffalo); vet review advised
+T020,2026-09-13,Evening,Lactoscan (Ultrasonic),4.7,8.9,31.3,3.4,5.0,0.0,NA,Measured,2026-08-06 10:48 (Morning),Normal - within expected range
+T021,2026-09-14,Morning,Lactoscan Milk Analyzer,5.0,8.2,28.0,3.17,4.61,2.0,31.2,Simulated,,Normal - within expected range
+T022,2026-09-14,Evening,Lactoscan Milk Analyzer,5.0,8.5,28.9,3.27,4.76,0.0,32.5,Simulated,,Normal - within expected range
+T023,2026-09-15,Morning,Lactoscan Milk Analyzer,4.9,8.4,28.4,3.22,4.68,0.5,29.0,Simulated,,Normal - within expected range
+T024,2026-09-15,Evening,Lactoscan Milk Analyzer,4.9,8.0,26.9,3.35,3.9,0.0,39.8,Simulated - flagged,,Low lactose (ratio 0.49) + elevated milk temp (39.8C) - possible mastitis; recommend udder/vet check
+T025,2026-09-16,Morning,Prompt MilkoLite Combo,5.9,9.1,30.0,3.5,5.1,0.0,NA,Measured (Protein/Lactose estimated - device does not report them),2026-09-17 07:20 (Morning),Normal - within expected range
+T026,2026-09-16,Evening,Lactoscan Milk Analyzer,5.5,8.3,27.6,3.35,4.1,0.0,32.1,Simulated - flagged,,Lactose lower than expected for this SNF (ratio 0.49) - possible subclinical mastitis; monitor animal
+T027,2026-09-17,Morning,Lactoscan Milk Analyzer,3.7,7.7,26.5,2.98,4.34,7.8,29.2,Simulated,,Normal - within expected range
+T028,2026-09-17,Evening,Lactoscan (Ultrasonic),6.8,7.9,25.6,3.1,4.4,1.9,NA,Measured,2026-07-17 21:53 (Evening),Normal - within expected range
